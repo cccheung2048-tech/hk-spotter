@@ -12,7 +12,7 @@
   <!-- Babel for JSX -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body className="bg-gray-100 text-gray-900 min-h-screen">
   <div id="root"></div>
 
   <script type="text/babel">
@@ -23,7 +23,6 @@
       const [searchQuery, setSearchQuery] = useState('');
       const [selectedRegion, setSelectedRegion] = useState('全港');
 
-      // 動態從 spots.json 讀取展覽資料
       useEffect(() => {
         fetch('./spots.json')
           .then(res => res.json())
@@ -32,28 +31,30 @@
       }, []);
 
       const filteredSpots = spots.filter(spot => {
-        const matchesSearch = spot.title.includes(searchQuery) || spot.venue.includes(searchQuery);
+        const matchesSearch = spot.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                              spot.venue.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesRegion = selectedRegion === '全港' || spot.region === selectedRegion;
         return matchesSearch && matchesRegion;
       });
 
       return (
-        <div className="min-h-screen flex flex-col">
-          <header className="bg-slate-900 text-white p-4 shadow-md sticky top-0 z-50">
+        <div className="min-h-screen flex flex-col bg-slate-900 text-slate-100">
+          <header className="bg-slate-950 p-4 shadow-md sticky top-0 z-50 border-b border-slate-800">
             <div className="max-w-4xl mx-auto flex justify-between items-center">
               <h1 className="text-xl font-bold tracking-wider text-cyan-400">HK SPOTTER</h1>
-              <span className="text-xs bg-slate-800 px-2 py-1 rounded text-slate-300">香港展覽 & Pop-up</span>
+              <span className="text-xs bg-slate-800 px-2 py-1 rounded text-slate-300 border border-slate-700">香港展覽 & Pop-up</span>
             </div>
           </header>
 
           <main className="flex-1 max-w-4xl w-full mx-auto p-4 space-y-4">
-            <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 space-y-3">
+            {/* 搜尋與篩選區塊 */}
+            <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 space-y-3 shadow-lg">
               <input
                 type="text"
                 placeholder="搜尋展覽、地點..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                className="w-full px-4 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500"
               />
               <div className="flex gap-2">
                 {['全港', '港島', '九龍', '新界'].map(region => (
@@ -62,8 +63,8 @@
                     onClick={() => setSelectedRegion(region)}
                     className={`px-3 py-1.5 rounded-lg text-sm font-medium transition ${
                       selectedRegion === region
-                        ? 'bg-cyan-500 text-white'
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        ? 'bg-cyan-500 text-white font-bold'
+                        : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
                     }`}
                   >
                     {region}
@@ -72,22 +73,31 @@
               </div>
             </div>
 
+            {/* 卡片列表 */}
             <div className="grid gap-4 md:grid-cols-2">
               {filteredSpots.map(spot => (
-                <div key={spot.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
-                  <img src={spot.image} alt={spot.title} className="h-48 w-full object-cover" />
+                <div key={spot.id} className="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden flex flex-col shadow-md hover:border-slate-600 transition">
+                  <img 
+                    src={spot.image} 
+                    alt={spot.title} 
+                    className="h-48 w-full object-cover bg-slate-900"
+                    onError={(e) => {
+                      e.target.onerror = null; 
+                      e.target.src = 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80';
+                    }}
+                  />
                   <div className="p-4 flex-1 flex flex-col justify-between space-y-2">
                     <div>
-                      <div className="flex justify-between items-start">
-                        <h2 className="text-lg font-bold text-gray-800">{spot.title}</h2>
+                      <div className="flex justify-between items-start gap-2">
+                        <h2 className="text-lg font-bold text-white leading-snug">{spot.title}</h2>
                         {spot.isHot && (
-                          <span className="bg-rose-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">HOT</span>
+                          <span className="bg-rose-500 text-white text-xs px-2 py-0.5 rounded-full font-bold shrink-0">HOT</span>
                         )}
                       </div>
-                      <p className="text-sm text-cyan-600 font-medium">{spot.venue}</p>
-                      <p className="text-xs text-gray-500 mt-1">{spot.description}</p>
+                      <p className="text-sm text-cyan-400 font-medium mt-1">{spot.venue}</p>
+                      <p className="text-xs text-slate-400 mt-1 line-clamp-2">{spot.description}</p>
                     </div>
-                    <div className="pt-2 border-t border-gray-50 text-xs text-gray-400 space-y-1">
+                    <div className="pt-2 border-t border-slate-700 text-xs text-slate-400 space-y-1">
                       <p>📍 {spot.address}</p>
                       <p>🚇 {spot.transport}</p>
                     </div>
