@@ -1,0 +1,34 @@
+name: Auto Update HK Spots
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 檢出程式碼
+        uses: actions/checkout@v3
+
+      - name: 設定 Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 安裝必要套件
+        run: |
+          pip install requests beautifulsoup4
+
+      - name: 執行爬蟲更新數據
+        run: python scraper.py
+
+      - name: 自動提交更新至 GitHub
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add spots.json
+          git diff-index --quiet HEAD || git commit -m "chore: auto-update spots.json"
+          git push
