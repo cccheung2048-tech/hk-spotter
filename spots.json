@@ -24,3 +24,73 @@
     "image": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80"
   }
 ]
+[
+  {
+    "id": 3,
+    "title": "當代設計與工藝特展",
+    "venue": "K11人文購物藝術館",
+    "region": "九龍",
+    "category": "藝術",
+    "isHot": true,
+    "date": "2026.06.01 - 2026.06.30",
+    "time": "10:00 - 22:00",
+    "price": "免費入場",
+    "address": "九龍尖沙咀梳士巴利道18號",
+    "transport": "港鐵尖沙咀站 J出口步行 5 分鐘",
+    "description": "匯聚國際及本地新銳設計師的創意結晶，展出多件融合科技與美學的互動裝置藝術。",
+    "image": "https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=800&q=80",
+    "lat": 22.2952,
+    "lng": 114.1742
+  },
+  {
+    "id": 4,
+    "title": "香港本土插畫設計展",
+    "venue": "元創坊",
+    "region": "港島",
+    "category": "設計",
+    "isHot": false,
+    "date": "2026.06.05 - 2026.06.25",
+    "time": "12:00 - 22:00",
+    "price": "免費入場",
+    "address": "香港島中環鴨巴甸街35號",
+    "transport": "港鐵中環站 D2出口步行 7 分鐘",
+    "description": "走訪本地原創工作室，探索香港獨特的街頭文化與插畫藝術創作。",
+    "image": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=80",
+    "lat": 22.2831,
+    "lng": 114.1534
+  },
+  {
+    "id": 5,
+    "title": "歷史古蹟與當代藝術雙年展",
+    "venue": "大館",
+    "region": "港島",
+    "category": "歷史與藝術",
+    "isHot": true,
+    "date": "2026.06.10 - 2026.07.15",
+    "time": "08:00 - 23:00",
+    "price": "部分展覽需預約",
+    "address": "香港島中環荷李活道10號",
+    "transport": "港鐵中環站 D1出口步行 8 分鐘",
+    "description": "在過百年歷史的法定古蹟中，體驗前衛的當代藝術展覽與沉浸式燈光表演。",
+    "image": "https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=800&q=80",
+    "lat": 22.2820,
+    "lng": 114.1539
+  },
+  {
+    "id": 6,
+    "title": "紡織文化與永續時尚展",
+    "venue": "南豐紗廠",
+    "region": "新界",
+    "category": "紡織與科技",
+    "isHot": false,
+    "date": "2026.06.12 - 2026.07.05",
+    "time": "10:00 - 22:00",
+    "price": "免費入場",
+    "address": "新界荃灣白田壩街45號",
+    "transport": "港鐵荃灣站 A3出口步行 15 分鐘",
+    "description": "由舊紡織廠改建而成的文創地標，結合環保科技、手作坊與紡織歷史回顧。",
+    "image": "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=800&q=80",
+    "lat": 22.3789,
+    "lng": 114.1121
+  }
+]
