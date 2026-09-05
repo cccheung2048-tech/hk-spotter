@@ -11,18 +11,35 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <!-- Babel for JSX -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <style>
+    /* 確保地圖在黑暗模式下正常顯示與適應圓角 */
+    .leaflet-container {
+      width: 100%;
+      height: 100%;
+      border-radius: 0.75rem;
+      background: #0f172a;
+    }
+  </style>
 </head>
 <body className="bg-slate-900 text-slate-100 min-h-screen">
   <div id="root"></div>
 
   <script type="text/babel">
-    const { useState, useEffect } = React;
+    const { useState, useEffect, useRef } = React;
 
     function App() {
       const [spots, setSpots] = useState([]);
       const [searchQuery, setSearchQuery] = useState('');
       const [selectedRegion, setSelectedRegion] = useState('全港');
       const [showInstallTip, setShowInstallTip] = useState(false);
+      
+      const mapRef = useRef(null);
+      const mapInstanceRef = useRef(null);
+      const markersRef = useRef([]);
 
       useEffect(() => {
         fetch('./spots.json')
@@ -31,12 +48,49 @@
           .catch(err => console.error("資料載入失敗:", err));
       }, []);
 
+      // 初始化地圖
+      useEffect(() => {
+        if (!mapInstanceRef.current) {
+          const map = L.map(mapRef.current).setView([22.3193, 114.1694], 11);
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap contributors'
+          }).addTo(map);
+          mapInstanceRef.current = map;
+        }
+      }, []);
+
+      // 當篩選後的展覽變更時，更新地圖標記
       const filteredSpots = spots.filter(spot => {
         const matchesSearch = spot.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                               spot.venue.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesRegion = selectedRegion === '全港' || spot.region === selectedRegion;
         return matchesSearch && matchesRegion;
       });
+
+      useEffect(() => {
+        if (!mapInstanceRef.current) return;
+        const map = mapInstanceRef.current;
+
+        // 清除舊標記
+        markersRef.current.forEach(marker => marker.remove());
+        markersRef.current = [];
+
+        // 加入新標記
+        filteredSpots.forEach(spot => {
+          if (spot.lat && spot.lng) {
+            const marker = L.marker([spot.lat, spot.lng]).addTo(map)
+              .bindPopup(`
+                <div style="font-family: sans-serif; color: #333;">
+                  <b style="font-size: 14px;">${spot.title}</b><br>
+                  <span style="color: #0284c7; font-weight: bold;">${spot.venue}</span><br>
+                  <small>${spot.date}</small>
+                </div>
+              `);
+            markersRef.current.push(marker);
+          }
+        });
+      }, [filteredSpots]);
 
       return (
         <div className="min-h-screen flex flex-col bg-slate-900 text-slate-100">
@@ -97,6 +151,11 @@
                   </button>
                 ))}
               </div>
+            </div>
+
+            {/* 地圖檢視區塊 */}
+            <div className="bg-slate-800 p-2 rounded-xl border border-slate-700 shadow-lg">
+              <div ref={mapRef} className="w-full h-64 sm:h-80 rounded-lg z-10"></div>
             </div>
 
             {/* 卡片列表 */}
