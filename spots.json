@@ -7,9 +7,9 @@
     "region": "九龍",
     "isHot": true,
     "address": "九龍灣 MegaBox L18 Mega Sky 空中花園",
-    "transport": "港鐵九龍灣站 A 出口轉乘穿梭巴士或步行 8 分鐘",
+    "transport": "港鐵九龍灣站 A 出口轉乘穿梭巴士",
     "description": "場內設有 10 米闊的巨型吹氣哥基「Mochi 麻糬」，造型笑咪咪面向日落。免費入場！",
-    "image": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80"
+    "image": "https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=800&q=80"
   },
   {
     "id": "2",
@@ -21,6 +21,6 @@
     "address": "西九文化區 M+ 博物館",
     "transport": "港鐵九龍站 E4 出口步行 10 分鐘",
     "description": "展出多位本地及國際當代藝術家作品，涵蓋視覺藝術、設計與建築。",
-    "image": "https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=800&q=80"
+    "image": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80"
   }
 ]
